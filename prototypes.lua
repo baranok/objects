@@ -9,6 +9,15 @@ function object(fn)
 		local interface = {}
 		local obj = {}
 
+		local properties = {}
+		properties.setup = function(name, get, set)
+			properties[name] = {
+				get = get,
+				set = set,
+			}
+		end
+		_ENV.properties = properties
+
 		setmetatable(_ENV, {
 			__index = function(t, k)
 				if k=='self'then
@@ -33,11 +42,21 @@ function object(fn)
 				if k=="interface" then
 					return interface
 				else
-					return interface[k]
+					local property = properties[k]
+					if type(property)=='table' and type(property.get)=='function' then
+						return property.get()
+					else
+						return interface[k]
+	            	end
 				end
 			end,
 			__newindex = function(t, k, v)
-				interface[k] = v
+				local property = properties[k]
+				if type(property)=='table' and type(property.set)=='function' then
+					property.set(v)
+				else
+					interface[k] = v
+	        	end
 			end,
 		})
 		return obj
@@ -50,7 +69,10 @@ local function prototype(name)
 	assert(type(name)=='string')
 	local p = cachedPrototypes[name]
 	if not f then
-		local f = loadfile(('./prototypes/%s.lua'):format(name))
+		local f, msg = loadfile(('./prototypes/%s.lua'):format(name))
+		if not f then
+			error(msg)
+		end
 		assert(type(f)=='function')
 		p = f()
 		cachedPrototypes[name]=p
