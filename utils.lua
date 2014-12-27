@@ -31,6 +31,11 @@ utils.bag = function()
 		table.insert(toBeRemoved, i)
 	end
 
+	o.clear = function()
+		t = {}
+		toBeRemoved = {}
+	end
+
 	o.process = function()
 		for _, index in ipairs(toBeRemoved) do
 			t[index] = nil
@@ -38,4 +43,20 @@ utils.bag = function()
 		toBeRemoved = {}
 	end
 	return o
+end
+
+local console = require 'console'
+local con
+
+function printC(color, fmt, ...)
+	if not con then
+		con = console.prepare()
+	end
+
+	con.attr(color or 0x07)
+	if #({...})>0 then
+		io.write(fmt:format(...))
+	else
+		io.write(fmt)
+	end
 end

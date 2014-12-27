@@ -2,6 +2,7 @@ local prototypes = require 'prototypes'
 
 return object(function(xpTable)
 	local xp = prototypes.variable(0, {0, math.huge})
+	local level = 0
 
 	properties.setup('xp',
 		function()
@@ -12,25 +13,20 @@ return object(function(xpTable)
 		end
 	)
 
-	properties.setup('maxPsi',
+	properties.setup('level',
 		function()
-			return psi.maxValue
+			return level
 		end,
 		function(v)
-			psi.maxValue = v
+			level = v
 		end
 	)
 
-	properties.setup('regeneration',
-		function()
-			return psi.dt
-		end,
-		function(v)
-			psi.dt = v
-		end
-	)
+	self.add = function(amount, time)
+		xp.add(amount, time or 1)
+	end
 
 	self.step = function()
-		psi.step()
+		xp.step()
 	end
 end)

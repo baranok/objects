@@ -22,6 +22,8 @@ function object(fn)
 			__index = function(t, k)
 				if k=='self'then
 					return obj
+				elseif k=='interface' then
+					return interface
 				else
 					return interface[k]
 				end
@@ -46,8 +48,13 @@ function object(fn)
 					if type(property)=='table' and type(property.get)=='function' then
 						return property.get()
 					else
-						return interface[k]
-	            	end
+						local fn = rawget(interface, 'get')
+						if type(fn)=='function' then
+							return fn(k)
+						else
+							return interface[k]
+						end
+		            end
 				end
 			end,
 			__newindex = function(t, k, v)
@@ -55,7 +62,12 @@ function object(fn)
 				if type(property)=='table' and type(property.set)=='function' then
 					property.set(v)
 				else
-					interface[k] = v
+					local fn = rawget(interface, 'set')
+					if type(fn)=='function' then
+						fn(k, v)
+					else
+						interface[k] = v
+					end
 	        	end
 			end,
 		})
@@ -67,11 +79,13 @@ local cachedPrototypes = {}
 
 local function prototype(name)
 	assert(type(name)=='string')
+
 	local p = cachedPrototypes[name]
 	if not f then
 		local f, msg = loadfile(('./prototypes/%s.lua'):format(name))
 		if not f then
-			error(msg)
+			f, msg = loadfile(('./prototypes/components/%s.lua'):format(name))
+			assert(f, "Component not found\n"..tostring(msg))
 		end
 		assert(type(f)=='function')
 		p = f()

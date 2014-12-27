@@ -12,12 +12,31 @@ return object(function(current, range)
 
 	local valueFns = utils.bag()
 
-	local function addValue(v)
-		self.current = clamp(self.current + v, self.minValue, self.maxValue)
-	end
+	self.minFn = false
+	self.maxFn = false
+	self.enabled = true
 
 	local function setValue(v)
-		self.current = clamp(v, self.minValue, self.maxValue)
+		local finalize = false
+		if self.enabled then
+			if v < self.minValue and type(self.minFn)=='function' then
+				self.current, finalize = self.minFn(v)
+				if finalize then
+					self.enabled = false
+				end
+			elseif v > self.maxValue and type(self.maxFn)=='function' then
+				self.current,finalize = self.maxFn(v)
+				if finalize then
+					self.enabled = false
+				end
+			else
+				self.current = clamp(v, self.minValue, self.maxValue)
+			end
+		end
+	end
+
+	local function addValue(v)
+		setValue(self.current + v)
 	end
 
 	self.step = function()
@@ -40,9 +59,7 @@ return object(function(current, range)
 		return true
 	end)
 
-	self.add = function(amount)
-		self.current = self.current + amount
-	end
+	self.add = addValue
 
 	self.mod = function(amount, totalTime, timeOffset)
 		timeOffset = timeOffset or 0
@@ -54,7 +71,7 @@ return object(function(current, range)
 
     			return function(time, timeDiff)
     				if (time >= startTime) then
-	    				local diff = amount(endTime - time, step.current)
+	    				local diff = amount(endTime - time, self.current)
     					if type(diff)=='number' then
 	    	                addValue(diff)
 	        	            return true

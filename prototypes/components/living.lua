@@ -1,11 +1,18 @@
 local prototypes = require 'prototypes'
 
 return object(function(health, maxHealth)
-	local health = prototypes.variable(health or maxHealth or 1, {0, maxHealth or 1})
+	local health = prototypes.variable(health or maxHealth or 1, {0, maxHealth or health or 1})
 	health.dt = 0.1
+	local dead = false
+
+	health.minFn = function(v)
+		health.dt = 0
+		dead = true
+		return v, true
+	end
 
 	properties.setup('alive', function()
-		return health.current > 0
+		return (not dead) and health.current > 0
 	end)
 
 	properties.setup('health',
