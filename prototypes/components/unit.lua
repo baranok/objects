@@ -2,54 +2,71 @@ local prototypes = require 'prototypes'
 
 return object(function(name)
 	self.name = name
-	self.resistance = prototypes.resistance()
+	self.race = ''
+	self.shieldBlocking = false
 
-	local living = prototypes.living(10, 10)
-	living.regeneration = 0.1
+	local entity = prototypes.entity()
+	local experience = prototypes.experience()
 
 	properties.setup('health',
 		function()
-			return living.health
+			return entity.health
 		end,
 		function(v)
-			living.health = v
+			entity.health = v
 		end
 	)
 
 	properties.setup('maxHealth',
 		function()
-			return living.maxHealth
+			return entity.maxHealth
 		end,
 		function(v)
-			living.maxHealth = v
+			entity.maxHealth = v
 		end
 	)
 
 	properties.setup('alive',
 		function()
-			return living.alive
+			return entity.alive
 		end
 	)
 
 	properties.setup('regeneration',
 		function()
-			return living.regeneration
+			return entity.regeneration
 		end,
 		function(v)
-			living.regeneration = v
+			entity.regeneration = v
 		end
 	)
 
-	self.heal = function(amount, time, offset)
-		living.add(amount, time, offset or 0)
-	end
+	properties.setup('xp',
+		function()
+			return experience.xp
+		end,
+		function(v)
+			experience.xp = v
+		end
+	)
 
-	self.applyDmg = function(amount, time, offset)
-		living.add(-amount, time, offset or 0)
-	end
+	properties.setup('level',
+		function()
+			return experience.level
+		end,
+		function(v)
+			experience.level = v
+		end
+	)
+
+	self.addXp = experience.add
+
+	self.resistance = entity.resistance
+	self.heal = entity.heal
+	self.applyDmg = entity.applyDmg
 
 	self.step = function()
-		living.step()
+		entity.step()
+		experience.step()
 	end
-
 end)

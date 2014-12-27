@@ -2,7 +2,7 @@ local prototypes = require 'prototypes'
 
 return object(function(health, maxHealth)
 	local health = prototypes.variable(health or maxHealth or 1, {0, maxHealth or health or 1})
-	health.dt = 0.1
+	health.dt = 0
 	local dead = false
 
 	health.minFn = function(v)

@@ -24,6 +24,6 @@ for i=1, 100 do
 	t1 = os.time()
 end
 ]]--
-o4.resistance.normal = 10
+o4.resistance.normal = 0.5
 print(o3.name, o3.health, o3.resistance.normal)
 print(o4.name, o4.health, o4.resistance.normal)

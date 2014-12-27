@@ -1,47 +1,47 @@
 local prototypes = require 'prototypes'
 
 return object(function(name,material)
+	self.name = name
 	self.material = material
 
-	local unit = prototypes.unit(name)
-	unit.regeneration = 0
+	local entity = prototypes.entity()
+	entity.regeneration = 0
 
 	properties.setup('health',
 		function()
-			return unit.health
+			return entity.health
 		end,
 		function(v)
-			unit.health = v
+			entity.health = v
 		end
 	)
 
 	properties.setup('maxHealth',
 		function()
-			return unit.maxHealth
+			return entity.maxHealth
 		end,
 		function(v)
-			unit.maxHealth = v
+			entity.maxHealth = v
 		end
 	)
 
 	properties.setup('alive',
 		function()
-			return unit.alive
+			return entity.alive
 		end
 	)
 
 	properties.setup('name',
 		function()
-			return unit.name
+			return entity.name
 		end,
 		function(v)
-			unit.name = v
+			entity.name = v
 		end
 	)
 
-	self.resistance = unit.resistance
-
-	self.heal = unit.heal
-	self.applyDmg = unit.applyDmg
-	self.step = unit.step
+	self.resistance = entity.resistance
+	self.heal = entity.heal
+	self.applyDmg = entity.applyDmg
+	self.step = entity.step
 end)
