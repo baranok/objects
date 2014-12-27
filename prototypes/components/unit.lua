@@ -8,6 +8,9 @@ return object(function(name)
 	local entity = prototypes.entity()
 	local experience = prototypes.experience()
 
+	local mana = prototypes.mana()
+	local psi = prototypes.psi()
+
 	properties.setup('health',
 		function()
 			return entity.health
@@ -56,6 +59,60 @@ return object(function(name)
 		end,
 		function(v)
 			experience.level = v
+		end
+	)
+
+	properties.setup('mana',
+		function()
+			return mana.mana
+		end,
+		function(v)
+			mana.mana = v
+		end
+	)
+
+	properties.setup('maxMana',
+		function()
+			return mana.maxMana
+		end,
+		function(v)
+			mana.maxMana = v
+		end
+	)
+
+	properties.setup('manaRegeneration',
+		function()
+			return mana.regeneration
+		end,
+		function(v)
+			mana.regeneration = v
+		end
+	)
+
+	properties.setup('psi',
+		function()
+			return psi.psi
+		end,
+		function(v)
+			psi.psi = v
+		end
+	)
+
+	properties.setup('maxPsi',
+		function()
+			return psi.maxPsi
+		end,
+		function(v)
+			psi.maxPsi = v
+		end
+	)
+
+	properties.setup('psiRegeneration',
+		function()
+			return psi.regeneration
+		end,
+		function(v)
+			psi.regeneration = v
 		end
 	)
 
