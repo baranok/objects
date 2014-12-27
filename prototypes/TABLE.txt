@@ -13,10 +13,9 @@ ice
 snow
 glass
 
-RESISTANCE TYPES:
+RESISTANCE / DAMAGE TYPES:
 
-normal 
-hollow
+normal
 spell
 fire
 explosive
@@ -46,3 +45,18 @@ cyborg
 robot
 natural
 unnatural
+
+WEAPON TYPES:
+
+normal
+heavy
+energy
+exotic
+
+DAMAGE MODIFIERS:
+
+hollowpoint
+armorpierce
+shieldpierce
+cannotevade
+cannotmiss

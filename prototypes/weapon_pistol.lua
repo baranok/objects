@@ -10,9 +10,10 @@ return function()
 	entity.damageType = 'normal'
 	--]]
 	entity.reloadTime = 2100
-	entity.jamReloadTime = 1800
+	entity.jamReloadTime = entity.ReloadTime*0.6
 	entity.jamChance = 1/360
-	entity.firemode = 'semi'
+	entity.fireRate = 60/500 --500 RPM/rounds per minute
+	entity.fireMode = 'semi'
 	
 	return entity
 end
