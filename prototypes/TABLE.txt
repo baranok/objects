@@ -1,0 +1,48 @@
+MATERIAL TYPES:
+
+wood
+dirt
+grass
+sand
+gravel
+stone
+metal
+mud
+water
+ice
+snow
+glass
+
+RESISTANCE TYPES:
+
+normal 
+hollow
+spell
+fire
+explosive
+energy
+acid
+mental
+disease
+rad
+gas
+
+ATTRIBUTE TYPES:
+str
+vit
+agi
+dex
+int
+pow
+psi
+
+RACE TYPES:
+
+human
+alien
+undead
+demon
+cyborg
+robot
+natural
+unnatural

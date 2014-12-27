@@ -10,6 +10,8 @@ local o4 = prototypes.block_stone()
 o2.applyDmg(8, 2)
 o2.heal(7, 1, 5)
 o2.applyDmg(12, 1, 6)
+print(o2.name, o2.health, o2.attribute.psi)
+
 
 local t0,t1 = os.time(), os.time()
 --[[

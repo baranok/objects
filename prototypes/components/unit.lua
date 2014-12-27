@@ -3,7 +3,17 @@ local prototypes = require 'prototypes'
 return object(function(name)
 	self.name = name
 	self.race = ''
+	
+	self.armor = 0
+	self.shield = 0
+	self.shieldBlockChance = 0
+	self.shieldMana = 0
+	self.shieldManaRatio = 1
 	self.shieldBlocking = false
+	self.evasion = 0
+	self.miss = 0.05
+	self.painThreshold = 12
+	self.painChance = 0.3
 
 	local entity = prototypes.entity()
 	local experience = prototypes.experience()
@@ -118,6 +128,7 @@ return object(function(name)
 
 	self.addXp = experience.add
 
+	self.attribute = prototypes.attribute()
 	self.resistance = entity.resistance
 	self.heal = entity.heal
 	self.applyDmg = entity.applyDmg

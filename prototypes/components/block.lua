@@ -4,6 +4,7 @@ return object(function(name,material)
 	self.name = name
 	self.material = material
 
+	self.armor = 0
 	local entity = prototypes.entity()
 	entity.regeneration = 0
 
